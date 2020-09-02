@@ -11,6 +11,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   HomeState get initialState => HomeInitState();
+  int count = 0;
+  bool _isloading = false;
   UserfetchState userfetchstate = UserfetchState();
 
   @override
@@ -18,11 +20,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeEvent event,
   ) async* {
     if (event is UserfetchEvent) {
-      print("block");
-      HomeResponseModel userList =
-          await HomeRepository().fetchusers(event.count);
-      List<Data> userdata = userList.data ?? [];
-      yield userfetchstate..usersdata = userdata;
+      print(count);
+      if (_isloading == false) {
+        count = (event.type == 'refresh') ? 1 : count + 1;
+        _isloading = true;
+        HomeResponseModel userList =
+            await HomeRepository().fetchusers(count.toString());
+        _isloading = false;
+        if (userList.data.isNotEmpty) {
+          List<Data> userdata = (count == 1) ? [] : userfetchstate.usersdata;
+          userdata = userdata + userList.data;
+          yield HomeInitState();
+          yield userfetchstate..usersdata = userdata;
+        } else {
+          count -= 1;
+        }
+      } else {
+        print("sdadascfsdfcdscf");
+      }
     }
   }
 }

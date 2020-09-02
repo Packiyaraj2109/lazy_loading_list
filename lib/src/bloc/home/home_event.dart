@@ -4,6 +4,6 @@ part of 'home_bloc.dart';
 abstract class HomeEvent {}
 
 class UserfetchEvent extends HomeEvent {
-  String count;
-  UserfetchEvent(this.count);
+  String type;
+  UserfetchEvent(this.type);
 }
