@@ -1,5 +1,5 @@
 class AppTextConstant {
-  static const String TITLE = 'Lazy Loading List:';
+  static const String TITLE = 'Lazy Loading List';
   static const String LOGIN = 'Login';
   static const String LOGOUT = 'Logout';
   static const String USERNAME = 'Username';
