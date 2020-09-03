@@ -29,12 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
     _scrollController
-      ..addListener(() {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent) {
-          fetchUsers();
-        }
-      });
+      ..addListener(
+        () {
+          if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent) {
+            fetchUsers();
+          }
+        },
+      );
   }
 
   Future<void> pullrefresh() async {
@@ -49,71 +51,102 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildList() {
-    return RefreshIndicator(
-      child: ListView.builder(
-        controller: _scrollController,
-        padding: EdgeInsets.all(8),
-        itemCount: _usersdata.length,
-        itemBuilder: (BuildContext context, int index) {
-          Data userdata = _usersdata[index];
-          return Container(
-            height: 100,
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(userdata.avatar)),
-                  title: Text(userdata.firstName + " " + userdata.lastName),
-                  subtitle: Text(userdata.email),
+  Widget _bodybuild() {
+    return Expanded(
+      child: RefreshIndicator(
+        child: ListView.builder(
+          controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: _usersdata.length,
+          itemBuilder: (BuildContext context, int index) {
+            Data userdata = _usersdata[index];
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    new BoxShadow(
+                      color: Colors.grey[400],
+                      blurRadius: 2.0,
+                    ),
+                  ],
+                  color: Colors.white,
+                  borderRadius: new BorderRadius.all(
+                    Radius.circular(10),
+                  ),
                 ),
-              ],
-            ),
-          );
-        },
+                child: Container(
+                  height: 80,
+                  child: Center(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(userdata.avatar)),
+                      title: Text(userdata.firstName + " " + userdata.lastName),
+                      subtitle: Text(userdata.email),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        onRefresh: () => pullrefresh(),
       ),
-      onRefresh: () => pullrefresh(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: ()=> null,
-          child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: RotatedBox(
-            quarterTurns: 2,
-            child: GestureDetector(
-              child: Icon(
-                Icons.exit_to_app,
-                color: Colors.white,
+    return Scaffold(
+      appBar: _buildappbar(),
+      body: Container(
+        padding: EdgeInsets.only(left: 16, right: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 16, left: 16),
+              child: Text(
+                AppTextConstant.TITLE,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
               ),
-              onTap: () => logout(),
             ),
-          ),
-          title: Text(AppTextConstant.TITLE),
-          centerTitle: true,
-        ),
-        body: Container(
-          child: BlocBuilder<HomeBloc, HomeState>(
-            condition: (HomeState previous, HomeState current) {
-              return current is UserfetchState;
-            },
-            builder: (context, state) {
-              if (state is UserfetchState && state.usersdata.isNotEmpty) {
-                _usersdata = state.usersdata;
-                return _buildList();
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+            BlocBuilder<HomeBloc, HomeState>(
+              condition: (HomeState previous, HomeState current) {
+                return current is UserfetchState;
+              },
+              builder: (context, state) {
+                if (state is UserfetchState && state.usersdata.isNotEmpty) {
+                  _usersdata = state.usersdata;
+                  return _bodybuild();
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  AppBar _buildappbar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      leading: RotatedBox(
+        quarterTurns: 2,
+        child: GestureDetector(
+          child: Icon(
+            Icons.exit_to_app,
+            color: Colors.white,
+          ),
+          onTap: () => logout(),
+        ),
+      ),
+      title: Text(AppTextConstant.MAINPAGE),
+      centerTitle: true,
     );
   }
 

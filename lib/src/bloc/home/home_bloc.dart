@@ -20,7 +20,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeEvent event,
   ) async* {
     if (event is UserfetchEvent) {
-      print(count);
       if (_isloading == false) {
         count = (event.type == 'refresh') ? 1 : count + 1;
         _isloading = true;
@@ -35,8 +34,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         } else {
           count -= 1;
         }
-      } else {
-        print("sdadascfsdfcdscf");
       }
     }
   }

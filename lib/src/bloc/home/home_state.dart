@@ -6,7 +6,6 @@ abstract class HomeState {}
 class HomeInitState extends HomeState {}
 
 class UserfetchState extends HomeState {
-
   List<Data> usersdata;
   UserfetchState({this.usersdata});
 }

@@ -38,7 +38,9 @@ class MainApp extends StatelessWidget {
         return MaterialPageRoute(
           builder: (BuildContext context) {
             return BlocProvider(
-              create:(BuildContext context)=> HomeBloc(),child: HomeScreen());
+              create: (BuildContext context) => HomeBloc(),
+              child: HomeScreen(),
+            );
           },
         );
         break;

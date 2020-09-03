@@ -9,6 +9,4 @@ class   HomeRepository {
         await HttpClient().getMethod(count);
     return HomeResponseModel.fromJson(resp);
   }
-
-  
 }

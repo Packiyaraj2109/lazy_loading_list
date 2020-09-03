@@ -25,142 +25,146 @@ class _SignupState extends State<Signup> {
       onWillPop: () => loginscreen(),
       child: Scaffold(
         key: _scaffoldKey,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: AppColors.gradient,
-          ),
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50.0),
-                child: Center(
-                  child: Text(AppTextConstant.TITLE,
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textcolor)),
-                ),
+        body: _bodybuild(),
+      ),
+    );
+  }
+
+  Container _bodybuild() {
+    return Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: AppColors.gradient,
+        ),
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50.0),
+              child: Center(
+                child: Text(AppTextConstant.TITLE,
+                    style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textcolor)),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                  width: double.infinity,
-                  height: 450,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    color: AppColors.appBackgroundColor,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                width: double.infinity,
+                height: 450,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppTextConstant.REGISTER,
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: AppColors.boldtextColor,
-                            fontWeight: FontWeight.bold),
+                  color: AppColors.appBackgroundColor,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppTextConstant.REGISTER,
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: AppColors.boldtextColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextField(
+                      inputFormatters: [
+                        new WhitelistingTextInputFormatter(
+                            RegExp("[a-zA-Z0-9]"))
+                      ],
+                      controller: _userController,
+                      decoration: InputDecoration(
+                        labelText: AppTextConstant.USERNAME,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.bordercolor),
+                        ),
                       ),
-                      TextField(
-                        inputFormatters: [
-                          new WhitelistingTextInputFormatter(
-                              RegExp("[a-zA-Z0-9]"))
-                        ],
-                        controller: _userController,
-                        decoration: InputDecoration(
-                          labelText: AppTextConstant.USERNAME,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: AppColors.bordercolor),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      inputFormatters: [
+                        new WhitelistingTextInputFormatter(
+                            RegExp("[a-zA-Z0-9]"))
+                      ],
+                      controller: _passController,
+                      decoration: InputDecoration(
+                        labelText: AppTextConstant.PASSWORD,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.bordercolor),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      inputFormatters: [
+                        new WhitelistingTextInputFormatter(
+                            RegExp("[a-zA-Z0-9]"))
+                      ],
+                      controller: _passConfirmController,
+                      decoration: InputDecoration(
+                        labelText: AppTextConstant.CONFIRMPASSWORD,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.bordercolor),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => _signupButton(),
+                      child: Container(
+                        height: 50.0,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80),
+                          gradient: AppColors.buttongradient,
+                        ),
+                        child: Center(
+                          child: Text(
+                            AppTextConstant.REGISTER,
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: AppColors.textcolor,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
-                      TextField(
-                        obscureText: true,
-                        inputFormatters: [
-                          new WhitelistingTextInputFormatter(
-                              RegExp("[a-zA-Z0-9]"))
-                        ],
-                        controller: _passController,
-                        decoration: InputDecoration(
-                          labelText: AppTextConstant.PASSWORD,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: AppColors.bordercolor),
-                          ),
-                        ),
-                      ),
-                      TextField(
-                        obscureText: true,
-                        inputFormatters: [
-                          new WhitelistingTextInputFormatter(
-                              RegExp("[a-zA-Z0-9]"))
-                        ],
-                        controller: _passConfirmController,
-                        decoration: InputDecoration(
-                          labelText: AppTextConstant.CONFIRMPASSWORD,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: AppColors.bordercolor),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => _signupButton(),
-                        child: Container(
-                          height: 50.0,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(80),
-                            gradient: AppColors.buttongradient,
-                          ),
-                          child: Center(
-                            child: Text(
-                              AppTextConstant.REGISTER,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(AppTextConstant.AlreadyHaveAccount,
                               style: TextStyle(
-                                  fontSize: 24,
-                                  color: AppColors.textcolor,
+                                  color: AppColors.hintcolor,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold)),
+                          GestureDetector(
+                            onTap: () => loginscreen(),
+                            child: Text(
+                              ("  ${AppTextConstant.LOGIN}"),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.boldtextColor,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(AppTextConstant.AlreadyHaveAccount,
-                                style: TextStyle(
-                                    color: AppColors.hintcolor,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold)),
-                            GestureDetector(
-                              onTap: () => loginscreen(),
-                              child: Text(
-                                ("  ${AppTextConstant.LOGIN}"),
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.boldtextColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-    );
+      );
   }
 
   loginscreen() {

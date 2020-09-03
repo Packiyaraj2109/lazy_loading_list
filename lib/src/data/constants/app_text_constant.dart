@@ -1,5 +1,5 @@
 class AppTextConstant {
-  static const String TITLE = 'LAZY LIST';
+  static const String TITLE = 'Lazy Loading List:';
   static const String LOGIN = 'Login';
   static const String LOGOUT = 'Logout';
   static const String USERNAME = 'Username';
@@ -12,5 +12,6 @@ class AppTextConstant {
   static const String CANCEL = 'Cancel';
   static const String CONFIRM = 'Confirm';
   static const String ExitMsg = 'Are you sure to exit?';
+  static const String MAINPAGE = 'Main Page';
 
 }
